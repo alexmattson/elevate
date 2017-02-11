@@ -13,7 +13,8 @@ module.exports = {
     ],
   },
   output: {
-    path: path.join(__dirname, 'build/static'),
+    path: __dirname + "../backend/public",
+    // path: path.join(__dirname, 'build/static'),
     filename: '[name].bundle.js',
     publicPath: '/static/'
   },

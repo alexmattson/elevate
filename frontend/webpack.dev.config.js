@@ -9,9 +9,10 @@ module.exports = {
     // dynamically add by server.js
   },
   output: {
-    path: path.join(__dirname, 'build/static'),
-    filename: '[name].bundle.js',
-    publicPath: '/static'
+    path: __dirname + "../backend/public",
+    // path: path.join(__dirname, 'build/static'),
+    filename: 'bundle.js'
+
   },
   devServer: {
     contentBase: path.join(__dirname, 'src'),

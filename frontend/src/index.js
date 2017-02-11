@@ -10,26 +10,26 @@ import configStore from './common/configStore';
 const store = configStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
-const root = document.createElement('div');
-document.body.appendChild(root);
+document.addEventListener('DOMContentLoaded', () => {
 
-render(
-  <AppContainer>
-    <Root store={store} history={history} />
-  </AppContainer>,
-  root
-);
-
+  const root = document.getElementById('root');
+  render(
+    <AppContainer>
+      <Root store={store} history={history} />
+    </AppContainer>,
+    root
+  );
+});
 // Hot Module Replacement API
 /* istanbul ignore if  */
-if (module.hot) {
-  module.hot.accept('./containers/Root', () => {
-    const NextRoot = require('./containers/Root').default; // eslint-disable-line
-    render(
-      <AppContainer>
-        <NextRoot store={store} history={history} />
-      </AppContainer>,
-      root
-    );
-  });
-}
+// if (module.hot) {
+//   module.hot.accept('./containers/Root', () => {
+//     const NextRoot = require('./containers/Root').default; // eslint-disable-line
+//     render(
+//       <AppContainer>
+//         <NextRoot store={store} history={history} />
+//       </AppContainer>,
+//       root
+//     );
+//   });
+// }
