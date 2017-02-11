@@ -5,13 +5,11 @@ import {
   GET_POLLS_FAILURE,
   GET_POLLS_DISMISS_ERROR,
 } from './constants';
+import { addError } from '../../../common/errors/actions';
 
 
-const error = () => {
-  dispatch({
-    type: GET_POLLS_FAILURE,
-    data: {},
-  });
+const error = (error) => {
+  dispatch(addError(error));
 }
 
 const success = (data) => {
@@ -37,26 +35,18 @@ export function getPolls() {
   };
 }
 
-export function dismissGetPollsError() {
-  return {
-    type: GET_POLLS_DISMISS_ERROR,
-  };
-}
-
 export function reducer(state, action) {
   switch (action.type) {
     case GET_POLLS_BEGIN:
       return {
         ...state,
         getPollsPending: true,
-        getPollsError: null,
       };
 
     case GET_POLLS_SUCCESS:
       return {
         ...state,
         getPollsPending: false,
-        getPollsError: null,
         polls: action.data
       };
 
@@ -64,13 +54,6 @@ export function reducer(state, action) {
       return {
         ...state,
         getPollsPending: false,
-        getPollsError: action.data.error,
-      };
-
-    case GET_POLLS_DISMISS_ERROR:
-      return {
-        ...state,
-        getPollsError: null,
       };
 
     default:
