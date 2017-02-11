@@ -10,6 +10,3 @@ coverage
 .nyc_output
 .tmp
 .DS_Store
-
-bundle.js
-bundle.map.js

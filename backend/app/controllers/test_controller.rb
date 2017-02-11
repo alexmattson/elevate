@@ -1,8 +1,8 @@
 class TestController < ApplicationController
     def new
         pubnub = Pubnub.new(
-        subscribe_key: 'sub-c-0e9bcb60-edae-11e6-8919-0619f8945a4f',
-        publish_key: 'pub-c-0992c83c-b4e7-48bc-a0e2-97dc9499ce73'
+        subscribe_key: 'sub-c-6cbc7d16-f09c-11e6-9283-02ee2ddab7fe',
+        publish_key: 'pub-c-0644c683-0882-4d28-b6ac-81acf63ba847'
         )
 
         callback = Pubnub::SubscribeCallback.new(
