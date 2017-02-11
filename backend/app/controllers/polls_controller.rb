@@ -2,7 +2,7 @@ class PollsController < ApplicationController
     def create
 
         @poll = Poll.new(
-          name: params[:name],
+          params
         )
         byebug
         if @poll.save

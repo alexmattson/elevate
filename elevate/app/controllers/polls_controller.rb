@@ -5,7 +5,7 @@ class PollsController < ApplicationController
         name: params[:name],
         poll_type: params[:poll_type],
         description: params[:description],
-        token: '12345'
+        token: SecureRandom.urlsafe_base64(6)
       })
       if @poll.save
           render json: @poll
