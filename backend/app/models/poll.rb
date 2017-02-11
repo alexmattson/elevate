@@ -1,8 +1,6 @@
 class Poll < ApplicationRecord
-    def initialize(name, description, type)
-        self.name = name
-        self.description = description
-        self.type = type
+    attr_accessor :name, :description, :type, :token
+    def set_token
         self.token = SecureRandom.urlsafe_base64(6)
     end
 end

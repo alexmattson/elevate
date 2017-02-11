@@ -1,11 +1,14 @@
 class PollsController < ApplicationController
-
     def new
-        name = params[:name]
-        description = params[:description]
-        type = params[:type]
-        @poll = Poll.new(name, description, type)
+        @poll = Poll.new
+        @poll.name = params[:name]
+        @poll.description = params[:description]
+        @poll.type = params[:type]
+        @poll.set_token
         if @poll.save
-            render json:
+            render json: @poll
+        else
+            render json: 'error saving poll', status: 410
+        end
     end
 end
