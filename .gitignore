@@ -11,4 +11,4 @@ coverage
 .tmp
 .DS_Store
 bundle.js
-bundle.mpa.js
+bundle.js.map

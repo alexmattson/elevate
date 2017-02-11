@@ -1,8 +1,10 @@
 import initialState from './initialState';
 import { reducer as pollTestAction } from './pollTestAction';
+import { reducer as getPolls } from './getPolls';
 
 const reducers = [
   pollTestAction,
+  getPolls
 ];
 
 export default function reducer(state = initialState, action) {

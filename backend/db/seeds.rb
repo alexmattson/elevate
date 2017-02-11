@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Poll.create(
+  name: 'test',
+  description: 'this is a description',
+  type: 'typing',
+  token: '123456'
+);
