@@ -6,7 +6,7 @@ import pollReducer from '../features/poll/redux/reducer';
 const rootReducer = combineReducers({
   routing: routerReducer,
   home: homeReducer,
-  poll: pollReducer,
+  polls: pollReducer,
 });
 
 export default rootReducer;
