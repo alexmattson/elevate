@@ -1,0 +1,1 @@
+export const POLL_TEST_ACTION = 'POLL_TEST_ACTION';

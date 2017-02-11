@@ -2,12 +2,14 @@ import App from '../containers/App';
 
 import { PageNotFound } from '../components';
 import homeRoute from '../features/home/route';
+import pollRoute from '../features/poll/route';
 
 const routes = [{
   path: '/',
   component: App,
   childRoutes: [
     homeRoute,
+    pollRoute,
     { path: '*', name: 'Page not found', component: PageNotFound },
   ],
 }];
