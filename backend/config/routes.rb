@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-    post '/', to: 'test#new'
+    get '/', to: 'pages#index'
+    post '/polls', to: 'polls#new'
 end
