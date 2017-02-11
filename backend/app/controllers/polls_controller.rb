@@ -1,8 +1,10 @@
 class PollsController < ApplicationController
-    def new
-        body = JSON.parse(request.body.read)
+    def create
+
+        @poll = Poll.new(
+          name: params[:name],
+        )
         byebug
-        @poll = Poll.new(body)
         if @poll.save
             render json: @poll
         else
@@ -16,4 +18,6 @@ class PollsController < ApplicationController
         @poll = Poll.find_by(token: token_id)
         render json: @poll
     end
+
+
 end
