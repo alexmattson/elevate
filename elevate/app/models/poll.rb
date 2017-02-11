@@ -1,5 +1,7 @@
 class Poll < ApplicationRecord
-    def self.set_token
-        SecureRandom.urlsafe_base64(6)
-    end
+
+  def self.generate_token
+    return SecureRandom.urlsafe_base64(5)
+  end
+
 end

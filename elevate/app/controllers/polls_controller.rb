@@ -1,11 +1,12 @@
 class PollsController < ApplicationController
 
   def create
+      token = Poll.generate_token
       @poll = Poll.new({
         name: params[:name],
         poll_type: params[:poll_type],
         description: params[:description],
-        token: SecureRandom.urlsafe_base64(6)
+        token: token
       })
       if @poll.save
           render json: @poll
