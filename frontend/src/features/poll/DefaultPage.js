@@ -138,7 +138,6 @@ export class DefaultPage extends Component {
 
         <PollVote />
 
-        <PollResult />
         <Chart />
 
         <PollList polls={pubnub.polls} />
