@@ -1,26 +1,33 @@
+require 'open-uri'
 
 class OauthController < ApplicationController
     include HTTParty
     def index
+        endpoint = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize?'
         poll_id = params[:poll_id]
-        redirect_to ('https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=' +
-            '9886b2e7-684b-4370-b515-f54accde5490&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth%2Ftoken&response_type=code&state=1234&scope=User.read'
-        )
+        options = URI.encode_www_form({
+            "client_id" => APP_CONFIG['microsoft_client_id'],
+            "redirect_uri" => APP_CONFIG['root_url'] + '/oauth/token',
+            "response_type" => 'code',
+            "state" => poll_id,
+            "scope" => 'User.read'
+        })
+        redirect_to (endpoint + options)
         session[:poll_id] = poll_id
     end
 
     def token
         code = params[:code]
         options = {
-            "client_id": "9886b2e7-684b-4370-b515-f54accde5490",
-            "client_secret": "ZbG2MvqJqy33zq3j3qPUQ7c",
+            "client_id": APP_CONFIG['microsoft_client_id'],
+            "client_secret": APP_CONFIG['microsoft_secret'],
             "code": code,
-            "redirect_uri": "http://localhost:3000/oauth/token",
+            "redirect_uri": APP_CONFIG['root_url'] + "/oauth/token",
             "grant_type": "authorization_code",
             "scope": "User.read"
         }
         resp = self.class.post(
-            'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+            'https://login.microsoftonline.com/common/oauth2/v2.0/token?',
             {
               :body => options,
               :headers => { 'Content-Type' => 'application/x-www-form-urlencoded', 'Accept' => 'application/json'}
@@ -44,24 +51,30 @@ class OauthController < ApplicationController
             @user.email = user_info["userPrincipalName"]
             @user.oauth_token = token
             @user.save!
+        else
+            session[:token] = @user.oauth_token
         end
         puts @user
         redirect_to('/')
     end
 
     def docusign
-        byebug
         if params[:code]
-            byebug
             @user = current_user
             @user.docusign_oauth_token = params[:code]
             @user.save
+            redirect_to('/')
         else
-            secret_key = '3e6be949-f390-47c3-b70e-71d2e74d5289'
-            integrator_key = 'b0bb53e1-80bd-4f52-8dd2-4e7c08a29c54'
-            redirect_to(
-                'https://account-d.docusign.com/oauth/auth?response_type=code&client_id=b0bb53e1-80bd-4f52-8dd2-4e7c08a29c54&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth%2Fdocusign'
-            )
+            secret_key = APP_CONFIG['docusign_secret']
+            integrator_key = APP_CONFIG['docusign_integrator_key']
+            endpoint = 'https://account-d.docusign.com/oauth/auth?'
+            options = URI.encode_www_form({
+                "client_id" => integrator_key,
+                "redirect_uri" => APP_CONFIG['root_url'] + '/oauth/docusign',
+                "response_type" => 'code',
+                "scope" => 'User.read'
+            })
+            redirect_to(endpoint + options)
         end
     end
 end
