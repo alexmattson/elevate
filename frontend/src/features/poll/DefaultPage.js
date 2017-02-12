@@ -136,8 +136,11 @@ export class DefaultPage extends Component {
           Email Address:
           <input onChange={this.handleChange2} />
         </label>
-
-
+        <br />
+        <label>
+          Vote:
+          <input onChange={this.handleChange3} />
+        </label>
 
         <button onClick={this.publish}>
           Vote
