@@ -44,6 +44,7 @@ export class DefaultPage extends Component {
     this.handleChange = ::this.handleChange;
     this.handleChange2 = ::this.handleChange2;
     this.handleChange3 = ::this.handleChange3;
+    this.handleVote = ::this.handleVote;
     this.subscribe = ::this.subscribe;
     this.publish = ::this.publish;
   }
@@ -94,12 +95,14 @@ export class DefaultPage extends Component {
   publish(e){
     e.preventDefault();
     let poll = this.state.poll;
+    let email = this.state.email;
     let vote = this.state.vote;
     // debugger;
 
     pubnub.publish({
       message: {
         "poll_id": poll,
+        "email": email,
         "vote": vote
       },
       channel: 'voting-channel'
@@ -121,6 +124,11 @@ export class DefaultPage extends Component {
     this.setState({vote: e.target.value});
   }
 
+  handleVote(e) {
+    e.preventDefault();
+    this.setState({vote: e.target.value});
+  }
+
   render() {
     let { pubnub } = this.props;
 
@@ -138,11 +146,15 @@ export class DefaultPage extends Component {
           <input onChange={this.handleChange2} />
         </label>
         <br />
-        <label>
-          Vote:
-          <input onChange={this.handleChange3} />
-        </label>
+        Vote:
+        <button onClick={this.handleVote} value="yes">
+          Yes
+        </button>
+        <button onClick={this.handleVote} value="no">
+          No
+        </button>
 
+        <br />
         <button onClick={this.publish}>
           Vote
         </button>
