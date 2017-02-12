@@ -55,6 +55,10 @@ export class DefaultPage extends Component {
     })
   }
 
+  handleClick() {
+    browserHistory.push('get-started');
+  }
+
   render() {
     const { count, fetchRedditReactjsListPending, redditReactjsList, fetchRedditReactjsListError } = this.props.home;
     let cursor = {show: true,blink: true,element: '|',hideWhenDone: true,hideWhenDoneDelay: 3000};            
@@ -69,7 +73,7 @@ export class DefaultPage extends Component {
                             Create polls for your people and see what your people say
                         </Typist>
                     </div>
-                    <button className="btn btn-primary">Get Started</button>
+                    <button className="btn btn-primary" onClick={this.handleClick}>Get Started</button>
                 </div>
 
                 <div className="img-wrap">
