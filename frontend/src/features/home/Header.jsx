@@ -15,10 +15,7 @@ class Header extends Component {
     } else {
       return [
         <li className="header-item" key={1}>
-          <Link className="header-link" to="/signin">Sign In</Link>
-        </li>,
-        <li className="header-item" key={2}>
-          <Link className="header-link" to="/signup">Sign Up</Link>
+          <Link className="header-link" to="/get-started">Get Started</Link>
         </li>
       ];
     }
@@ -28,7 +25,7 @@ class Header extends Component {
     return (
       <header className="header">
         <Link to="/" className="header-logo">
-            <img src="./assets/images/logo.svg" alt="" className="img-logo"/>        
+            <img src="http://res.cloudinary.com/stellar-pixels/image/upload/v1486929017/logo_l9b0p5.svg" alt="" className="img-logo"/>        
         </Link>
         <ul className="header-nav">
           {this.renderLinks()}

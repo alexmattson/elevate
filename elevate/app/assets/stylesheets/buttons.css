@@ -4,3 +4,14 @@
     background-color: #61c091;
     padding: 1.3rem 1.5rem;
 }
+
+.btn-text {
+    font-size: 1rem;
+    vertical-align: middle;
+}
+
+.btn-image {
+    vertical-align:  middle;
+    width: 2rem;
+    margin-right: 1rem;
+}

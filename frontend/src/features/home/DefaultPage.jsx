@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import {router, browserHistory} from 'react-router';
 import { Hello, RedditList } from './index';
 import * as actions from './redux/actions';
 import PollsSvg from './PollsSvg';
@@ -40,26 +41,56 @@ export class DefaultPage extends Component {
     this.props.actions.fetchRedditReactjsList();
   }
 
+  handleSubmit(e) {
+    debugger;
+    e.preventDefault();
+    $.ajax({
+      url: '/api/polls',
+      type: 'post',
+      body: JSON.stringify({'name': $('.input').val()}),
+      contentType: 'application/json'
+    }).success(resp => {
+      debugger
+      browserHistory.push('/polls/' + JSON.parse(resp['token']))
+    })
+  }
+
   render() {
     const { count, fetchRedditReactjsListPending, redditReactjsList, fetchRedditReactjsListError } = this.props.home;
     let cursor = {show: true,blink: true,element: '|',hideWhenDone: true,hideWhenDoneDelay: 3000};            
     return (
       <div className="page-home">
-          <Header />  
-          <div className="c c-splash">
-              <div className="c-temp">
-                  <div className="hl-wrap">
-                      <Typist className="hl hl-flushed" cursor={cursor} avgTypingDelay={20} stdTypingDelay={0} >
-                          Create polls for your people and see what your people say
-                      </Typist>
-                  </div>
-                  <button className="btn btn-primary">Get Started</button>
-              </div>
+          {((!window.currentUser) ?
+            (
+            <div className="c c-splash">
+                <div className="c-temp">
+                    <div className="hl-wrap">
+                        <Typist className="hl hl-flushed" cursor={cursor} avgTypingDelay={20} stdTypingDelay={0} >
+                            Create polls for your people and see what your people say
+                        </Typist>
+                    </div>
+                    <button className="btn btn-primary">Get Started</button>
+                </div>
 
-              <div className="img-wrap">
-                  <PollsSvg />
-              </div>
-          </div>            
+                <div className="img-wrap">
+                    <PollsSvg />
+                </div>
+            </div>)            
+            :
+            (<div>
+              <form className="form" onSubmit={this.handleSubmit}>
+                <h2>Enter your question to create a poll</h2>
+                <input className="input" type="text" />
+                <input type="submit" />
+              </form>
+            <form className="form" onSubmit={this.handleSubmit}>
+              <h2>Enter your poll id to vote!</h2>
+              <input type="text"/>
+              <input type="submit" />
+            </form>
+            </div>
+            )
+          )}
       </div>
     );
   }

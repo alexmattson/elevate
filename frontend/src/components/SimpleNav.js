@@ -1,46 +1,41 @@
-/*
- * This is a very simple navigation tree for testing purpose.
- * It groups URLs by features.
-*/
-
-import React, { PureComponent, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-export default class SimpleNav extends PureComponent {
-  static propTypes = {
-    routes: PropTypes.array.isRequired,
-  };
+class Header extends Component {
 
-  renderLinks(items, basePath) {
-    return (
-      <ul>
-        {
-          items.reduce((prev, item) => {
-            let path;
-            if (/^\//.test(item.path)) {
-              path = item.path;
-            } else if (basePath === '/') {
-              path = `/${item.path}`;
-            } else {
-              path = `${basePath}/${item.path}`;
-            }
-            prev.push(<li key={path}><Link to={path}>{item.name || item.path}</Link></li>);
-
-            if (item.childRoutes && item.childRoutes.length) {
-              prev.push(<li key={`${path}_wrapper`}>{this.renderLinks(item.childRoutes, path)}</li>);
-            }
-            return prev;
-          }, [])
-        }
-      </ul>
-    );
+  renderLinks() {
+    if (this.props.authenticated) {
+      return (<li className="header-item">
+        <Link className="header-link" to="/dashboard">Dashboard</Link>        
+        <Link className="header-link" to="/calendar">Calendar</Link>        
+        <Link className="header-link" to="/new-task">New Task</Link>        
+        <Link className="header-link" to="/signout">Sign Out</Link>
+      </li>);
+    } else {
+      return [
+        <li className="header-item" key={1}>
+          <Link className="header-link" to="/signin">Sign In</Link>
+        </li>,
+        <li className="header-item" key={2}>
+          <Link className="header-link" to="/signup">Sign Up</Link>
+        </li>
+      ];
+    }
   }
 
   render() {
     return (
-      <div  className="component-simple-nav">
-        {this.renderLinks(this.props.routes[0].childRoutes, '')}
-      </div>
+      <header className="header">
+        <Link to="/" className="header-logo">
+            <img src="./images/logo.svg" alt="" className="img-logo"/>        
+        </Link>
+        <ul className="header-nav">
+          {this.renderLinks()}
+        </ul>
+      </header>
     );
   }
 }
+
+export default (Header);
