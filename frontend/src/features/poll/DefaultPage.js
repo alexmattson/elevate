@@ -33,7 +33,8 @@ export class DefaultPage extends Component {
 
   state = {
     poll: '',
-    vote: ''
+    vote: '',
+    email: ''
   }
 
   constructor(props) {
@@ -41,6 +42,7 @@ export class DefaultPage extends Component {
     this.handleGetPolls = ::this.handleGetPolls;
     this.handleChange = ::this.handleChange;
     this.handleChange2 = ::this.handleChange2;
+    this.handleChange3 = ::this.handleChange3;
     this.subscribe = ::this.subscribe;
     this.publish = ::this.publish;
   }
@@ -55,12 +57,12 @@ export class DefaultPage extends Component {
 
   subscribe(e) {
     e.preventDefault();
-    let channel = this.state.poll;
+    let poll = this.state.poll;
     // debugger;
 
 
     pubnub.subscribe({
-        channels: [`voting-channel`, `${channel}-result`],
+        channels: [`voting-channel`, `${poll}-result`],
         message: this.props.addVote
     });
 
@@ -78,6 +80,14 @@ export class DefaultPage extends Component {
         // }
       }
     });
+
+    // pubnub.publish({
+    //   message: {
+    //     "poll_id": poll,
+    //     "results": true
+    //   },
+    //   channel: 'voting-channel'
+    // });
   }
 
   publish(e){
@@ -102,6 +112,11 @@ export class DefaultPage extends Component {
   }
 
   handleChange2(e) {
+    this.setState({email: e.target.value});
+  }
+
+  handleChange3(e) {
+    e.preventDefault();
     this.setState({vote: e.target.value});
   }
 
@@ -117,12 +132,16 @@ export class DefaultPage extends Component {
           Subscribe
         </button>
         <br></br>
-        <input onChange={this.handleChange2} />
+        <label>
+          Email Address:
+          <input onChange={this.handleChange2} />
+        </label>
+
         <button onClick={this.publish}>
           Vote
         </button>
         <br/>
-        <PollResult/>
+
 
         <PollList polls={pubnub.polls} />
       </div>
