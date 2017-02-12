@@ -1,22 +1,37 @@
-import React, { PureComponent, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
-export default class PollList extends PureComponent {
+export default class PollList extends Component {
   static propTypes = {
-    polls: PropTypes.array
   };
 
   static defaultProps = {
     polls: [],
   };
 
+  constructor(props) {
+    super(props);
+    this.renderPolls = ::this.renderPolls;
+  }
+
+  renderPolls() {
+    let polls = this.props.polls
+    let pollIds = Object.keys(polls);
+
+    return pollIds.map(pollId => (
+        <li>
+          <ul>
+            <h1>{polls[pollId]}</h1>
+            {polls[pollId].events.map(event => (<li>event</li>))}
+          </ul>
+        </li>
+      )
+    )
+  }
+
   render() {
     return (
       <ul className="poll-polls-list">
-        {
-          this.props.polls.length > 0 ?
-            this.props.polls.map(item => <li key={item.data.id}><a href={item.data.url}>{item.data.title}</a></li>)
-            : <li className="no-items-tip">No items yet.</li>
-        }
+        {this.renderPolls()}
       </ul>
     );
   }

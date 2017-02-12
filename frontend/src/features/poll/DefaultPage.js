@@ -36,7 +36,7 @@ export class DefaultPage extends Component {
   }
 
   render() {
-    let { count, getPollsPending, polls, getPollsError } = this.props.polls;
+    let { pubnub } = this.props;
 
     return (
       <div className="poll-default-page">
@@ -48,7 +48,7 @@ export class DefaultPage extends Component {
         </button>
 
 
-        <PollList polls={polls} />
+        <PollList polls={pubnub.polls} />
       </div>
 
     );

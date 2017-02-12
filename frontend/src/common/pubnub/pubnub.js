@@ -1,5 +1,5 @@
 import PubNub from 'pubnub';
-import { receiveData } from './actions';
+import { receiveData, receiveMessage } from './actions';
 
 const PUBLISH_KEY = 'pub-c-0644c683-0882-4d28-b6ac-81acf63ba847';
 const SUBDCRIBE_KEY = 'sub-c-6cbc7d16-f09c-11e6-9283-02ee2ddab7fe';
@@ -16,7 +16,8 @@ export function sub() {
     function publishSampleMessage() {
         console.log("Since we're publishing on subscribe connectEvent, we're sure we'll receive the following publish.");
         var publishConfig = {
-            channel : channel,
+            channel,
+            'poll-id': 'pollId-1',
             message : "Let's vote!"
         }
         pubnub.publish(publishConfig, function(status, response) {

@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   get '/oauth', to: 'oauth#index'
   get 'oauth/token', to: 'oauth#token'
   get 'oauth/docusign', to: 'oauth#docusign'
+
+  get '*path', to: 'pages#index'
 end
