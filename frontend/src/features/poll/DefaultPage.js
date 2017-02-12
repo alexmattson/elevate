@@ -5,6 +5,7 @@ import * as actions from './redux/actions';
 import { addVote, addResults } from './redux/actions';
 import PollList from './PollList';
 import PollResult from './PollResult';
+import { Chart } from './d3Wrapper';
 // import { getPubnub } from '../../common/pubnub/pubnub';
 
 // import { sub } from '../../common/pubnub/pubnub';
@@ -147,7 +148,7 @@ export class DefaultPage extends Component {
         </button>
         <br/>
         <PollResult />
-
+        <Chart />
 
         <PollList polls={pubnub.polls} />
       </div>
