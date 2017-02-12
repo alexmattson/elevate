@@ -60,9 +60,9 @@ class PollVote extends React.Component {
   }
 
   subscribe(poll) {
-      const pollId = this.props.router.params.id;
-    // const pollId = poll.token
-    // if (pollId) {
+    //   const pollId = this.props.router.params.id;
+    const pollId = poll.token
+    if (pollId) {
       pubnub.subscribe({
         channels: [`${pollId}-result`],
         message: this.props.addVote
@@ -84,7 +84,7 @@ class PollVote extends React.Component {
         }
       });
 
-    // }
+    }
 
     // pubnub.publish({
     //   message: {
