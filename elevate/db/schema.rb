@@ -31,14 +31,11 @@ ActiveRecord::Schema.define(version: 20170212013606) do
 
   create_table "users", force: :cascade do |t|
     t.string   "microsoft_id"
-    t.string   "docusign_id"
     t.string   "email"
     t.string   "name"
     t.text     "oauth_token"
-    t.text     "docusign_oauth_token"
-    t.boolean  "admin"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
 end
