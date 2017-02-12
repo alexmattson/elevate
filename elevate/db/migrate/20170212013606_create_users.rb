@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :name
       t.text :oauth_token
       t.text :docusign_oauth_token
+      t.boolean :admin
       t.timestamps
     end
   end

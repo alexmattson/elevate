@@ -136,6 +136,7 @@ class OauthController < ApplicationController
 
         accountId = current_user.docusign_id
         docusign_endpoint = "https://demo.docusign.net/restapi/v2/accounts/#{APP_CONFIG['docusign_id']}/envelopes"
+        byebug
         docusign_resp = self.class.post(
             docusign_endpoint,
             {
