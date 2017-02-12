@@ -57,7 +57,7 @@ class PollVote extends React.Component {
 
 
     pubnub.subscribe({
-        channels: [`voting-channel`, `${poll}-result`],
+        channels: [`${poll}-result`],
         message: this.props.addVote
     });
 

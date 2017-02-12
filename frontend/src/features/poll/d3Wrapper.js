@@ -22,8 +22,8 @@ class Chart extends React.Component {
     d3Chart.remove();
   }
 
-  render(){
-    
+  render() {
+
     return (
       <div id='chart-container' className='chart-container'></div>
     )
