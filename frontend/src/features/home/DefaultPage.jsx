@@ -42,15 +42,13 @@ export class DefaultPage extends Component {
   }
 
   handleSubmit(e) {
-    debugger;
     e.preventDefault();
     $.ajax({
       url: '/api/polls',
       type: 'post',
       data: {'poll':{'name': $('.input').val()}},
     }).success(resp => {
-      debugger
-      browserHistory.push('/polls/' + JSON.parse(resp['token']))
+      browserHistory.push('/polls/' + resp['token'])
     })
   }
 
