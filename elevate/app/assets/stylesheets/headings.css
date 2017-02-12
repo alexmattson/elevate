@@ -3,3 +3,8 @@
     text-align: center;
     /* color: #666; */
 }
+
+#chart-container {
+    max-width: 800px;
+    max-height: 600px;
+}

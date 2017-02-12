@@ -50,7 +50,7 @@ export function getPoll(pollId) {
       type: GET_POLLS_BEGIN,
     });
 
-    $.get('localhost:3000/polls', {pollId} )
+    $.get('/api/polls/' + pollId )
       .done((data) => dispatch(receivePoll(data)))
       .fail((xhr) => console.log(xhr.responseText))
   };
