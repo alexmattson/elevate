@@ -13,3 +13,4 @@ coverage
 bundle.js
 bundle.js.map
 bundle.map.js
+/elevate/config/config.yml
