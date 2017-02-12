@@ -10,7 +10,6 @@ export default class App extends Component {
   render() {
     return (
       <div className="app">
-        <h1>My Awesome Project!</h1>
         <SimpleNav routes={routeConfig} />
         <div className="page-container">
           {this.props.children}
