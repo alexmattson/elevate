@@ -1,6 +1,5 @@
 const initialState = {
-  channels: {},
-  results: {}
+  polls: {}
 };
 
 export default initialState;

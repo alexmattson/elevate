@@ -1,22 +1,24 @@
 import PubNub from 'pubnub';
-import { receiveData } from './actions';
+import { receiveData, receiveMessage } from './actions';
 
 const PUBLISH_KEY = 'pub-c-0644c683-0882-4d28-b6ac-81acf63ba847';
 const SUBDCRIBE_KEY = 'sub-c-6cbc7d16-f09c-11e6-9283-02ee2ddab7fe';
 
+const pubnub =  new PubNub({
+  publishKey : PUBLISH_KEY,
+  subscribeKey : SUBDCRIBE_KEY
+});
+
+const channel = 'voting-channel'
+
 export function sub() {
   return (dispatch, store) => {
-    let channel = 'voting-channel'
-
-    let pubnub = new PubNub({
-        publishKey : PUBLISH_KEY,
-        subscribeKey : SUBDCRIBE_KEY
-    })
 
     function publishSampleMessage() {
         console.log("Since we're publishing on subscribe connectEvent, we're sure we'll receive the following publish.");
         var publishConfig = {
-            channel : channel,
+            channel,
+            'poll-id': 'pollId-1',
             message : "Let's vote!"
         }
         pubnub.publish(publishConfig, function(status, response) {
@@ -48,3 +50,18 @@ export function sub() {
     });
   }
 }
+
+// export function pub() {
+//   return (dispatch, store, channel, pollId, vote) => {
+//
+//     pubnub.publish() {
+//       channel: channel,
+//       poll_id: pollId,
+//       message: {
+//         poll_id: pollId,
+//         vote: vote
+//       }
+//     }
+//
+//   }
+// }
