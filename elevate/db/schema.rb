@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20170212013606) do
     t.string   "microsoft_id"
     t.string   "email"
     t.string   "name"
-    t.string   "oauth_token"
+    t.text     "oauth_token"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end

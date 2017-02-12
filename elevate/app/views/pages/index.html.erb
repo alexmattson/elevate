@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="/bundle.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/javascript">
+    <% if current_user %>
+        window.currentUser = JSON.parse(`<%= current_user.as_json.inspect.html_safe.gsub('=>', ':').split(', "created_at"')[0].html_safe + '}'%>`)
+    <% end %>
+    </script>
+  </body>
+</html>
