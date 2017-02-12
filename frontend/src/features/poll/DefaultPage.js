@@ -137,10 +137,13 @@ export class DefaultPage extends Component {
           <input onChange={this.handleChange2} />
         </label>
 
+
+
         <button onClick={this.publish}>
           Vote
         </button>
         <br/>
+        <PollResult />
 
 
         <PollList polls={pubnub.polls} />
