@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import PollList from './PollList';
 
-import { sub } from '../../common/pubnub/pubnub';
+// import { sub } from '../../common/pubnub/pubnub';
 
 export class DefaultPage extends Component {
   static propTypes = {
@@ -28,7 +28,7 @@ export class DefaultPage extends Component {
   }
 
   subscribe() {
-    sub(this.state.poll);
+    this.props.actions.sub(this.state.poll);
   }
 
   handleChange(e) {
@@ -38,10 +38,6 @@ export class DefaultPage extends Component {
   render() {
     let { count, getPollsPending, polls, getPollsError } = this.props.polls;
 
-
-    // <button className="btn-get-polls" disabled={getPollsPending} onClick={this.handleGetPolls}>
-    //   {getPollsPending ? 'Geting...' : 'Get reactjs topics'}
-    // </button>
     return (
       <div className="poll-default-page">
         Welcome to the Poll Page!!!!
@@ -63,6 +59,7 @@ export class DefaultPage extends Component {
 function mapStateToProps(state) {
   return {
     polls: state.polls,
+    pubnub: state.pubnub
   };
 }
 
