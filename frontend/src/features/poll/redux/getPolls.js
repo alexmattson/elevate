@@ -4,6 +4,7 @@ import {
   GET_POLLS_SUCCESS,
   GET_POLLS_FAILURE,
   GET_POLLS_DISMISS_ERROR,
+  ADD_VOTE
 } from './constants';
 import { addError } from '../../../common/errors/actions';
 
@@ -33,6 +34,13 @@ export function getPolls() {
       error
     });
   };
+}
+
+export function addVote(vote) {
+    return {
+        type: ADD_VOTE,
+        payload: vote,
+    };
 }
 
 export function reducer(state, action) {

@@ -11,7 +11,7 @@ const store = configStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
 document.addEventListener('DOMContentLoaded', () => {
-
+  window.store = store;
   const root = document.getElementById('root');
   render(
     <AppContainer>

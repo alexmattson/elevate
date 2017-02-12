@@ -1,10 +1,12 @@
 import initialState from './initialState';
 import { reducer as pollTestAction } from './pollTestAction';
 import { reducer as getPolls } from './getPolls';
+import { reducer as getVotes } from './getVotes';
 
 const reducers = [
   pollTestAction,
-  getPolls
+  getPolls,
+  getVotes
 ];
 
 export default function reducer(state = initialState, action) {
