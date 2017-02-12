@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170212013606) do
     t.string   "name"
     t.text     "oauth_token"
     t.text     "docusign_oauth_token"
+    t.boolean  "admin"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
