@@ -52,6 +52,11 @@ export class DefaultPage extends Component {
     })
   }
 
+  handlePollSubmit(e) {
+      e.preventDefault();
+      browserHistory.push('/polls/' + $('.text').val())
+  }
+
   handleClick() {
     browserHistory.push('get-started');
   }
@@ -84,9 +89,9 @@ export class DefaultPage extends Component {
                 <input className="input" type="text" />
                 <input type="submit" />
               </form>
-            <form className="form" onSubmit={this.handleSubmit}>
+            <form className="form" onSubmit={this.handlePollSubmit}>
               <h2>Enter your poll id to vote!</h2>
-              <input type="text"/>
+              <input className="text" type="text"/>
               <input type="submit" />
             </form>
             </div>
