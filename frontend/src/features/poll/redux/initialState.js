@@ -1,7 +1,13 @@
 const initialState = {
   count: 0,
   polls: [],
-  results: {yes: 0, no: 0},
+  results: {
+    votingData: {
+      yes: 0,
+      no: 0
+    },
+    emailData: []
+  },
 
   getPollsError: null,
   getPollsPending: false,

@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-'use strict';
+// 'use strict';
 
 import { d3Chart } from './d3Chart';
 
-export class Chart extends React.Component {
+class Chart extends React.Component {
 
   constructor(props){
     super(props);
@@ -23,6 +23,7 @@ export class Chart extends React.Component {
   }
 
   render(){
+    
     return (
       <div id='chart-container' className='chart-container'></div>
     )
