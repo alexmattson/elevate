@@ -1,6 +1,6 @@
 .form {width: 90%;max-width: 440px;/* margin: 3rem 15rem; */margin: 0rem auto 0;padding: 3rem 3rem;background: #fff;}
 
-.fieldset {/* display: flex; */margin-bottom: 1rem;}
+.fieldset {/* display: flex; */margin-bottom: 1rem; border: 0;}
 
 .field {
     

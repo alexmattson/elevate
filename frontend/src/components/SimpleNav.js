@@ -7,9 +7,6 @@ class Header extends Component {
   renderLinks() {
     if (this.props.authenticated) {
       return (<li className="header-item">
-        <Link className="header-link" to="/dashboard">Dashboard</Link>        
-        <Link className="header-link" to="/calendar">Calendar</Link>        
-        <Link className="header-link" to="/new-task">New Task</Link>        
         <Link className="header-link" to="/signout">Sign Out</Link>
       </li>);
     } else {
@@ -28,7 +25,7 @@ class Header extends Component {
     return (
       <header className="header">
         <Link to="/" className="header-logo">
-            <img src="./images/logo.svg" alt="" className="img-logo"/>        
+            <img src="http://res.cloudinary.com/stellar-pixels/image/upload/v1486929017/logo_abrv_lb2yb5.svg" alt="" className="img-logo"/>        
         </Link>
         <ul className="header-nav">
           {this.renderLinks()}
