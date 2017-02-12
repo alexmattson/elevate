@@ -55,7 +55,7 @@ class ShowPoll extends Component {
       <div className="poll-default-page">
         Show Poll
         <h1>{this.props.currentPoll.name}</h1>
-        <PollVote />
+        <PollVote router={this.props.router}/>
 
         <Chart />
 
