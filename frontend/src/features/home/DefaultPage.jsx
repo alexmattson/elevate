@@ -47,8 +47,7 @@ export class DefaultPage extends Component {
     $.ajax({
       url: '/api/polls',
       type: 'post',
-      body: JSON.stringify({'name': $('.input').val()}),
-      contentType: 'application/json'
+      data: {'poll':{'name': $('.input').val()}},
     }).success(resp => {
       debugger
       browserHistory.push('/polls/' + JSON.parse(resp['token']))
@@ -57,7 +56,7 @@ export class DefaultPage extends Component {
 
   render() {
     const { count, fetchRedditReactjsListPending, redditReactjsList, fetchRedditReactjsListError } = this.props.home;
-    let cursor = {show: true,blink: true,element: '|',hideWhenDone: true,hideWhenDoneDelay: 3000};            
+    let cursor = {show: true,blink: true,element: '|',hideWhenDone: true,hideWhenDoneDelay: 3000};
     return (
       <div className="page-home">
           {((!window.currentUser) ?
@@ -75,7 +74,7 @@ export class DefaultPage extends Component {
                 <div className="img-wrap">
                     <PollsSvg />
                 </div>
-            </div>)            
+            </div>)
             :
             (<div>
               <form className="form" onSubmit={this.handleSubmit}>

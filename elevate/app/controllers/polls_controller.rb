@@ -2,10 +2,9 @@ class PollsController < ApplicationController
 
   def create
     token = Poll.generate_token
+    byebug
     @poll = Poll.new({
-      name: params[:name],
-      poll_type: params[:poll_type],
-      description: params[:description],
+      name: params['poll']['name'],
       token: token
     })
     if @poll.save
