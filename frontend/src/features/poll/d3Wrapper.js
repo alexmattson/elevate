@@ -8,7 +8,7 @@ class Chart extends React.Component {
 
   constructor(props){
     super(props);
-    this.title = 'New Customers';
+    this.title = 'Vote Count';
     this.data = this.props.data;
     this.idx = 0;
   }
@@ -23,10 +23,9 @@ class Chart extends React.Component {
 
   componentWillReceiveProps(newProps){
     console.log(newProps);
-    debugger;
-    if ( !newProps.yes ) { return; }
-    debugger;
-    d3Chart.update(this.chartContainer, newProps, this.title);
+    if ( !newProps.results ) { return; }
+    let chartData = [this.props.results.yes, this.props.results.no];
+    d3Chart.update(this.chartContainer, chartData, this.title);
   }
 
   render(){

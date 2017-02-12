@@ -1,4 +1,4 @@
-import d3 from 'd3';
+import * as d3 from 'd3';
 
 export const d3Chart = {};
 
@@ -84,14 +84,14 @@ d3Chart.create = function(htmlElement, props){
   props.data.forEach( (value, index) => { drawBar(value, index); } );
 
   //label only some bars
-  //TODO: make this responsive to data length
-  //TODO: add for y axis
-  let xTicks = document.querySelector('#xAxis').querySelectorAll('.tick');
-  for (var i = 0; i < xTicks.length; i++) {
-    if(i%5){
-      xTicks[i].style.display = 'none';
-    }
-  }
+  // //TODO: make this responsive to data length
+  // //TODO: add for y axis
+  // let xTicks = document.querySelector('#xAxis').querySelectorAll('.tick');
+  // for (var i = 0; i < xTicks.length; i++) {
+  //   if(i%5){
+  //     xTicks[i].style.display = 'none';
+  //   }
+  // }
 };
 
 d3Chart.update = function(htmlElement, data, title){
@@ -139,6 +139,7 @@ const getYDomain = (dataArr) => {
   for(var i = max; i >= 0; i--){
     domain.push(i);
   }
+  if (max === 0){ return [0, 0];}
   return domain;
 }
 
@@ -151,6 +152,7 @@ const getYRange = (dataArr) => {
   for(var i = 0; i <= max; i++){
     range.push(i * fraction * chartHeight);
   }
+  if (max === 0){ return [0, chartHeight]; }
   return range;
 }
 
