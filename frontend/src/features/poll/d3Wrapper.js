@@ -1,3 +1,5 @@
+import React from 'react';
+import { connect } from 'react-redux';
 'use strict';
 
 import { d3Chart } from './d3Chart';
@@ -26,3 +28,14 @@ export class Chart extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  const results = state.polls.results.votingData;
+
+  return { results };
+};
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Chart);
