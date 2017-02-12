@@ -37,7 +37,6 @@ export class DefaultPage extends Component {
   }
 
   handleFetchReddit() {
-    debugger;
     this.props.actions.fetchRedditReactjsList();
   }
 

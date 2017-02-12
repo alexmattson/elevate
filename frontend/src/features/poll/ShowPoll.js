@@ -37,7 +37,6 @@ class ShowPoll extends Component {
   }
 
   componentWillReceiveProps(props) {
-    debugger;
 
 
     const pollId = this.props.router.params.id;
@@ -54,7 +53,6 @@ class ShowPoll extends Component {
 
         <PollVote />
 
-        <PollResult />
         <Chart />
 
         <PollList polls={pubnub.polls} />
