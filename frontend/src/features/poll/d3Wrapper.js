@@ -8,6 +8,7 @@ class Chart extends React.Component {
 
   constructor(props){
     super(props);
+    debugger;
     this.title = 'New Customers';
     this.data = this.props.data;
     this.idx = 0;
@@ -23,7 +24,9 @@ class Chart extends React.Component {
   }
 
   render(){
-    
+
+    // debugger;
+    if (!this.data){ return <div/>; }
     return (
       <div id='chart-container' className='chart-container'></div>
     )
@@ -32,7 +35,6 @@ class Chart extends React.Component {
 
 const mapStateToProps = state => {
   const results = state.polls.results.votingData;
-
   return { results };
 };
 

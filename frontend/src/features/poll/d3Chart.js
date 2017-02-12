@@ -93,6 +93,7 @@ d3Chart.create = function(htmlElement, props){
 };
 
 d3Chart.update = function(htmlElement, data, title){
+  // if()
   if(this.svg){ this.svg.remove(); } //remove old
   let newProps = {data: data, title: title}
   this.create(htmlElement, newProps);
@@ -108,23 +109,24 @@ d3Chart.remove = function(){
 // returns an array of the most recent n days (where n is the length of
 // the data array) as strings in the format 'Jan 15'
 const getXDomain = (dataArr) => {
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  let domain = []
-  let oneDay = 1000 * 60 * 60 * 24 // 1 day in ms
-  let today = new Date();
-  let numDays = dataArr.length - 1;
-  //start at first day of range
-  let dateObj = new Date( today - numDays * oneDay );
-  //loop through until today and create axis label from date object
-  for(var i = 0; i < dataArr.length; i++){
-    let month = dateObj.getMonth();
-    let day = dateObj.getDate();
-    let dateLabel = months[month] + ' ' + day.toString();
-    domain.push(dateLabel);
-    //step forward one day
-    dateObj = new Date(dateObj - (-oneDay) ); // why dont I just add you ask...
-  }
-  return domain;
+  return ['yes', 'no'];
+  // const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  // let domain = []
+  // let oneDay = 1000 * 60 * 60 * 24 // 1 day in ms
+  // let today = new Date();
+  // let numDays = dataArr.length - 1;
+  // //start at first day of range
+  // let dateObj = new Date( today - numDays * oneDay );
+  // //loop through until today and create axis label from date object
+  // for(var i = 0; i < dataArr.length; i++){
+  //   let month = dateObj.getMonth();
+  //   let day = dateObj.getDate();
+  //   let dateLabel = months[month] + ' ' + day.toString();
+  //   domain.push(dateLabel);
+  //   //step forward one day
+  //   dateObj = new Date(dateObj - (-oneDay) ); // why dont I just add you ask...
+  // }
+  // return domain;
 }
 
 // returns array of all integers in range (0..MAX(ARR))
