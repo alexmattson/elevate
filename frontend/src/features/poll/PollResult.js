@@ -39,7 +39,7 @@ class PollResult extends Component {
 
 
 const mapStateToProps = state => {
-  const results = state.polls.results
+  const results = state.polls.results.votingData;
 
   return { results };
 };

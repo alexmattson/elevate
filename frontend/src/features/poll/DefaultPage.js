@@ -5,6 +5,7 @@ import * as actions from './redux/actions';
 import { addVote, addResults } from './redux/actions';
 import PollList from './PollList';
 import PollResult from './PollResult';
+import { Chart } from './d3Wrapper';
 // import { getPubnub } from '../../common/pubnub/pubnub';
 
 // import { sub } from '../../common/pubnub/pubnub';
@@ -33,7 +34,8 @@ export class DefaultPage extends Component {
 
   state = {
     poll: '',
-    vote: ''
+    vote: '',
+    email: ''
   }
 
   constructor(props) {
@@ -41,6 +43,8 @@ export class DefaultPage extends Component {
     this.handleGetPolls = ::this.handleGetPolls;
     this.handleChange = ::this.handleChange;
     this.handleChange2 = ::this.handleChange2;
+    this.handleChange3 = ::this.handleChange3;
+    this.handleVote = ::this.handleVote;
     this.subscribe = ::this.subscribe;
     this.publish = ::this.publish;
   }
@@ -55,12 +59,12 @@ export class DefaultPage extends Component {
 
   subscribe(e) {
     e.preventDefault();
-    let channel = this.state.poll;
+    let poll = this.state.poll;
     // debugger;
 
 
     pubnub.subscribe({
-        channels: [`voting-channel`, `${channel}-result`],
+        channels: [`voting-channel`, `${poll}-result`],
         message: this.props.addVote
     });
 
@@ -78,17 +82,27 @@ export class DefaultPage extends Component {
         // }
       }
     });
+
+    // pubnub.publish({
+    //   message: {
+    //     "poll_id": poll,
+    //     "results": true
+    //   },
+    //   channel: 'voting-channel'
+    // });
   }
 
   publish(e){
     e.preventDefault();
     let poll = this.state.poll;
+    let email = this.state.email;
     let vote = this.state.vote;
     // debugger;
 
     pubnub.publish({
       message: {
         "poll_id": poll,
+        "email": email,
         "vote": vote
       },
       channel: 'voting-channel'
@@ -102,6 +116,16 @@ export class DefaultPage extends Component {
   }
 
   handleChange2(e) {
+    this.setState({email: e.target.value});
+  }
+
+  handleChange3(e) {
+    e.preventDefault();
+    this.setState({vote: e.target.value});
+  }
+
+  handleVote(e) {
+    e.preventDefault();
     this.setState({vote: e.target.value});
   }
 
@@ -117,12 +141,26 @@ export class DefaultPage extends Component {
           Subscribe
         </button>
         <br></br>
-        <input onChange={this.handleChange2} />
+        <label>
+          Email Address:
+          <input onChange={this.handleChange2} />
+        </label>
+        <br />
+        Vote:
+        <button onClick={this.handleVote} value="yes">
+          Yes
+        </button>
+        <button onClick={this.handleVote} value="no">
+          No
+        </button>
+
+        <br />
         <button onClick={this.publish}>
           Vote
         </button>
         <br/>
-        <PollResult/>
+        <PollResult />
+        <Chart />
 
         <PollList polls={pubnub.polls} />
       </div>
