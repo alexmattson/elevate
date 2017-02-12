@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { addVote, addResults } from './redux/actions';
+import { addVote, addResults, getPoll } from './redux/actions';
 import PollList from './PollList';
 import PollResult from './PollResult';
 import PollVote from './PollVote';
@@ -33,16 +33,16 @@ class ShowPoll extends Component {
   constructor(props) {
     super(props);
 
-
   }
 
   componentDidMount() {
     const pollId = this.props.router.params.id;
 
     if (pollId) {
-      
+      this.props.getPoll(pollId);
     }
   }
+
 
 
 
@@ -55,7 +55,6 @@ class ShowPoll extends Component {
 
         <PollVote />
 
-        <PollResult />
         <Chart />
 
         <PollList polls={pubnub.polls} />
@@ -69,7 +68,8 @@ class ShowPoll extends Component {
 function mapStateToProps(state) {
   return {
     polls: state.polls,
-    pubnub: state.pubnub
+    pubnub: state.pubnub,
+    currentPoll: state.polls.currentPoll
   };
 }
 
@@ -78,7 +78,8 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),
     addVote: (vote) => dispatch(addVote(vote)),
-    addResults: (results) => dispatch(addResults(results))
+    addResults: (results) => dispatch(addResults(results)),
+    getPoll: (pollId) => dispatch(getPoll(pollId))
   };
 }
 

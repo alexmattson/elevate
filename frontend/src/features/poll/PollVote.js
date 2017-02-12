@@ -50,31 +50,41 @@ class PollVote extends React.Component {
   //   this.props.actions.sub();
   // }
 
-  subscribe(e) {
-    e.preventDefault();
-    let poll = this.state.poll;
-    // debugger;
+  componentWillReceiveProps(nextProps) {
+      const poll = nextProps.currentPoll;
 
+      if (poll.token_id) {
+        this.subscribe(poll);
 
-    pubnub.subscribe({
-        channels: [`${poll}-result`],
-        message: this.props.addVote
-    });
-
-    console.log('subscribed');
-
-    pubnub.addListener({
-      message: (data) => {
-        console.log(data);
-        const message = data.message;
-        if (data.channel.match(/result/)) {
-          this.props.addResults(message);
-        }
-        // if (data.message.vote) {
-        //   this.props.addVote(data.message.vote);
-        // }
       }
-    });
+  }
+
+  subscribe(poll) {
+    e.preventDefault();
+    // debugger;
+    const pollId = poll.token_id
+    if (pollId) {
+      pubnub.subscribe({
+        channels: [`${pollId}-result`],
+        message: this.props.addVote
+      });
+
+      console.log('subscribed');
+
+      pubnub.addListener({
+        message: (data) => {
+          console.log(data);
+          const message = data.message;
+          if (data.channel.match(/result/)) {
+            this.props.addResults(message);
+          }
+          // if (data.message.vote) {
+          //   this.props.addVote(data.message.vote);
+          // }
+        }
+      });
+
+    }
 
     // pubnub.publish({
     //   message: {
@@ -123,13 +133,15 @@ class PollVote extends React.Component {
   }
 
 
+  // <input onChange={this.handleChange} />
+  // <button onClick={this.subscribe}>
+  //   Subscribe
+  // </button>
+
   render() {
     return (
       <div>
-        <input onChange={this.handleChange} />
-        <button onClick={this.subscribe}>
-          Subscribe
-        </button>
+
         <br></br>
         <label>
           Email Address:
@@ -159,7 +171,8 @@ class PollVote extends React.Component {
 function mapStateToProps(state) {
   return {
     polls: state.polls,
-    pubnub: state.pubnub
+    pubnub: state.pubnub,
+    currentPoll: state.polls.currentPoll
   };
 }
 

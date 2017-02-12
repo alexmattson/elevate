@@ -1,7 +1,7 @@
 const initialState = {
   count: 0,
   polls: [],
-  currentPoll: '',
+  currentPoll: {},
   results: {
     votingData: {
       yes: 0,
