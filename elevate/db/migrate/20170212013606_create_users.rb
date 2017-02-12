@@ -4,7 +4,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :microsoft_id
       t.string :email
       t.string :name
-      t.string :oauth_token
+      t.text :oauth_token
       t.timestamps
     end
   end

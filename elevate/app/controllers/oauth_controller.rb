@@ -6,6 +6,7 @@ class OauthController < ApplicationController
         redirect_to ('https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=' +
             '9886b2e7-684b-4370-b515-f54accde5490&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth%2Ftoken&response_type=code&state=1234&scope=User.read'
         )
+        session[:poll_id] = poll_id
     end
 
     def token
@@ -34,7 +35,6 @@ class OauthController < ApplicationController
                 :headers => {'Authorization' => "Bearer #{token}"}
             }
         ).parsed_response
-        byebug
         #<HTTParty::Response:0x7f94fbfc4d00 parsed_response={"@odata.context"=>"https://graph.microsoft.com/v1.0/$metadata#users/$entity", "givenName"=>"Paul", "surname"=>"Oliva", "displayName"=>"Paul Oliva", "id"=>"45251513397218f8", "userPrincipalName"=>"pmoliv@gmail.com", "businessPhones"=>[], "jobTitle"=>nil, "mail"=>nil, "mobilePhone"=>nil, "officeLocation"=>nil, "preferredLanguage"=>nil}, @response=#<Net::HTTPOK 200 OK readbody=true>, @headers={"cache-control"=>["private"], "transfer-encoding"=>["chunked"], "content-type"=>["application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8"], "request-id"=>["419bfbdc-f6f5-4433-ac9a-66113b83a678"], "client-request-id"=>["419bfbdc-f6f5-4433-ac9a-66113b83a678"], "x-ms-ags-diagnostic"=>["{\"ServerInfo\":{\"DataCenter\":\"West US\",\"Slice\":\"SliceA\",\"ScaleUnit\":\"001\",\"Host\":\"AGSFE_IN_3\",\"ADSiteName\":\"WST\"}}"], "odata-version"=>["4.0"], "duration"=>["450.7095"], "date"=>["Sun, 12 Feb 2017 01:33:11 GMT"], "connection"=>["close"]}>
         @user = User.find_by(microsoft_id: user_info["id"])
         if !@user
@@ -46,7 +46,7 @@ class OauthController < ApplicationController
             @user.save!
         end
         puts @user
-        render json: @user
+        redirect_to('/')
     end
 
     def docusign
