@@ -1,0 +1,13 @@
+.c {width: 90%;margin: 0 auto;max-width: 1200px;}
+
+.c-splash {
+    max-width: 1060px;
+    display: flex;
+    padding: 7rem 0;
+    justify-content: space-between;
+}
+
+.c-temp {
+    width: 80%;
+    margin-right: 1%;
+}

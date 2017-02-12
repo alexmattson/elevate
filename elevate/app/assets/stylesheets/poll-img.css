@@ -1,0 +1,30 @@
+#polls {
+    width: 100%;
+}
+
+#poll1, #poll2, #poll3 {
+    position: absolute;
+    width: 100%;
+}
+
+#poll1 {
+    /*opacity: 0;*/
+}
+
+#poll2 {
+}
+
+.check{
+    stroke-dasharray: 22;
+    stroke-dashoffset: 22;
+    -webkit-transition: stroke-dashoffset .3s 0s ease-out;
+    -moz-transition: stroke-dashoffset .3s 0s ease-out;
+    -ms-transition: stroke-dashoffset .3s 0s ease-out;
+    -o-transition: stroke-dashoffset .3s 0s ease-out;
+    transition: stroke-dashoffset .3s 0s ease-out;
+
+}
+
+.drawn {
+    stroke-dashoffset: 0;
+}
