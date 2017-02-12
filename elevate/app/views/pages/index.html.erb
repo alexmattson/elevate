@@ -5,3 +5,4 @@
         window.currentUser = JSON.parse(`<%= current_user.as_json.inspect.html_safe.gsub('=>', ':').split(', "created_at"')[0].html_safe + '}'%>`)
     <% end %>
     </script>
+    <script src="/bundle.js"></script>
