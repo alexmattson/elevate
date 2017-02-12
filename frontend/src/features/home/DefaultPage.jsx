@@ -5,7 +5,7 @@ import {router, browserHistory} from 'react-router';
 import { Hello, RedditList } from './index';
 import * as actions from './redux/actions';
 import PollsSvg from './PollsSvg';
-import Header from './header';
+// import Header from './header';
 
 import Typist from 'react-typist';
 
@@ -82,15 +82,19 @@ export class DefaultPage extends Component {
             </div>)            
             :
             (<div>
-              <form className="form" onSubmit={this.handleSubmit}>
-                <h2>Enter your question to create a poll</h2>
-                <input className="input" type="text" />
-                <input type="submit" />
+              <form className="form" onSubmit={this.handleSubmit} style={{margin: '2rem auto'}}>
+                <h2 className="heading">Enter your question to create a poll</h2>
+                <fieldset className="fieldset">
+                  <input className="input" type="text" />
+                </fieldset>
+                <input className="btn btn-primary" type="submit" />
               </form>
             <form className="form" onSubmit={this.handleSubmit}>
-              <h2>Enter your poll id to vote!</h2>
-              <input type="text"/>
-              <input type="submit" />
+              <h2 className="heading">Enter your poll id to vote!</h2>
+                <fieldset className="fieldset">
+                  <input className="input" type="text"/>
+                </fieldset>
+              <input className="btn btn-primary" type="submit" />
             </form>
             </div>
             )

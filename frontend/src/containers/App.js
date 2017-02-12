@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import routeConfig from '../common/routeConfig';
-import SimpleNav from '../components/SimpleNav';
+import Header from '../components/Header';
 
 export default class App extends Component {
   static propTypes = {
@@ -10,7 +10,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="app">
-        <SimpleNav routes={routeConfig} />
+        <Header routes={routeConfig} />
         <div className="page-container">
           {this.props.children}
         </div>
