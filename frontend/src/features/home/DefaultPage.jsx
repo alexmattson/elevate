@@ -48,13 +48,13 @@ export class DefaultPage extends Component {
       type: 'post',
       data: {'poll':{'name': $('.input').val()}},
     }).success(resp => {
-      browserHistory.push('/polls/' + resp['token'])
+      browserHistory.push('/poll/' + resp['token'])
     })
   }
 
   handlePollSubmit(e) {
       e.preventDefault();
-      browserHistory.push('/polls/' + $('.text').val())
+      browserHistory.push('/poll/' + $('.text').val())
   }
 
   handleClick() {
