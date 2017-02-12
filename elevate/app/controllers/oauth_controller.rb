@@ -27,7 +27,26 @@ class OauthController < ApplicationController
         )
         token = resp.parsed_response["access_token"]
         session[:token] = token
-        redirect_to 'http://localhost:3000/oauth/docusign'
+
+        user_info = self.class.get(
+            'https://graph.microsoft.com/v1.0/me',
+            {
+                :headers => {'Authorization' => "Bearer #{token}"}
+            }
+        ).parsed_response
+        byebug
+        #<HTTParty::Response:0x7f94fbfc4d00 parsed_response={"@odata.context"=>"https://graph.microsoft.com/v1.0/$metadata#users/$entity", "givenName"=>"Paul", "surname"=>"Oliva", "displayName"=>"Paul Oliva", "id"=>"45251513397218f8", "userPrincipalName"=>"pmoliv@gmail.com", "businessPhones"=>[], "jobTitle"=>nil, "mail"=>nil, "mobilePhone"=>nil, "officeLocation"=>nil, "preferredLanguage"=>nil}, @response=#<Net::HTTPOK 200 OK readbody=true>, @headers={"cache-control"=>["private"], "transfer-encoding"=>["chunked"], "content-type"=>["application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8"], "request-id"=>["419bfbdc-f6f5-4433-ac9a-66113b83a678"], "client-request-id"=>["419bfbdc-f6f5-4433-ac9a-66113b83a678"], "x-ms-ags-diagnostic"=>["{\"ServerInfo\":{\"DataCenter\":\"West US\",\"Slice\":\"SliceA\",\"ScaleUnit\":\"001\",\"Host\":\"AGSFE_IN_3\",\"ADSiteName\":\"WST\"}}"], "odata-version"=>["4.0"], "duration"=>["450.7095"], "date"=>["Sun, 12 Feb 2017 01:33:11 GMT"], "connection"=>["close"]}>
+        @user = User.find_by(microsoft_id: user_info["id"])
+        if !@user
+            @user = User.new
+            @user.name = user_info["displayName"]
+            @user.microsoft_id = user_info["id"]
+            @user.email = user_info["userPrincipalName"]
+            @user.oauth_token = token
+            @user.save!
+        end
+        puts @user
+        render json: @user
     end
 
     def docusign
