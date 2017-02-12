@@ -50,6 +50,18 @@ class OauthController < ApplicationController
     end
 
     def docusign
-
+        byebug
+        if params[:code]
+            byebug
+            @user = current_user
+            @user.docusign_oauth_token = params[:code]
+            @user.save
+        else
+            secret_key = '3e6be949-f390-47c3-b70e-71d2e74d5289'
+            integrator_key = 'b0bb53e1-80bd-4f52-8dd2-4e7c08a29c54'
+            redirect_to(
+                'https://account-d.docusign.com/oauth/auth?response_type=code&client_id=b0bb53e1-80bd-4f52-8dd2-4e7c08a29c54&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth%2Fdocusign'
+            )
+        end
     end
 end

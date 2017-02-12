@@ -32,8 +32,9 @@ ActiveRecord::Schema.define(version: 20170212013606) do
     t.string   "email"
     t.string   "name"
     t.text     "oauth_token"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.text     "docusign_oauth_token"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
 end
