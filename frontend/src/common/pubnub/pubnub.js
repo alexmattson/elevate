@@ -13,7 +13,7 @@ export function sub() {
         subscribeKey : SUBDCRIBE_KEY
     })
 
-    function publishSampleMessage() {
+    function publishSampleMessage(channel) {
         console.log("Since we're publishing on subscribe connectEvent, we're sure we'll receive the following publish.");
         var publishConfig = {
             channel : channel,
