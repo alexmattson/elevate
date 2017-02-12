@@ -16,15 +16,12 @@ ActiveRecord::Schema.define(version: 20170212013606) do
   enable_extension "plpgsql"
 
   create_table "polls", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.text     "description"
-    t.string   "poll_type"
-    t.string   "token",       null: false
+    t.string   "name",       null: false
+    t.string   "token",      null: false
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_polls_on_name", using: :btree
-    t.index ["poll_type"], name: "index_polls_on_poll_type", using: :btree
     t.index ["token"], name: "index_polls_on_token", using: :btree
     t.index ["user_id"], name: "index_polls_on_user_id", using: :btree
   end

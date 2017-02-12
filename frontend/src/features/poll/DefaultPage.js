@@ -8,7 +8,6 @@ import PollResult from './PollResult';
 import PollVote from './PollVote';
 import Chart from './d3Wrapper';
 // import { getPubnub } from '../../common/pubnub/pubnub';
-
 // import { sub } from '../../common/pubnub/pubnub';
 import PubNub from 'pubnub';
 
@@ -139,7 +138,6 @@ export class DefaultPage extends Component {
 
         <PollVote />
 
-        <PollResult />
         <Chart />
 
         <PollList polls={pubnub.polls} />
