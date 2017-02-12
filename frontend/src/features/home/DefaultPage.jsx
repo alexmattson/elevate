@@ -42,17 +42,19 @@ export class DefaultPage extends Component {
   }
 
   handleSubmit(e) {
-    debugger;
     e.preventDefault();
     $.ajax({
       url: '/api/polls',
       type: 'post',
-      body: JSON.stringify({'name': $('.input').val()}),
-      contentType: 'application/json'
+      data: {'poll':{'name': $('.input').val()}},
     }).success(resp => {
-      debugger
-      browserHistory.push('/polls/' + JSON.parse(resp['token']))
+      browserHistory.push('/poll/' + resp['token'])
     })
+  }
+
+  handlePollSubmit(e) {
+      e.preventDefault();
+      browserHistory.push('/poll/' + $('.text').val())
   }
 
   handleClick() {
@@ -61,7 +63,7 @@ export class DefaultPage extends Component {
 
   render() {
     const { count, fetchRedditReactjsListPending, redditReactjsList, fetchRedditReactjsListError } = this.props.home;
-    let cursor = {show: true,blink: true,element: '|',hideWhenDone: true,hideWhenDoneDelay: 3000};            
+    let cursor = {show: true,blink: true,element: '|',hideWhenDone: true,hideWhenDoneDelay: 3000};
     return (
       <div className="page-home">
           {((!window.currentUser) ?
@@ -79,7 +81,7 @@ export class DefaultPage extends Component {
                 <div className="img-wrap">
                     <PollsSvg />
                 </div>
-            </div>)            
+            </div>)
             :
             (<div>
               <form className="form" onSubmit={this.handleSubmit} style={{margin: '2rem auto'}}>
@@ -89,12 +91,11 @@ export class DefaultPage extends Component {
                 </fieldset>
                 <input className="btn btn-primary" type="submit" />
               </form>
-            <form className="form" onSubmit={this.handleSubmit}>
-              <h2 className="heading">Enter your poll id to vote!</h2>
-                <fieldset className="fieldset">
-                  <input className="input" type="text"/>
-                </fieldset>
-              <input className="btn btn-primary" type="submit" />
+
+            <form className="form" onSubmit={this.handlePollSubmit}>
+              <h2>Enter your poll id to vote!</h2>
+              <input className="text" type="text"/>
+              <input type="submit" />
             </form>
             </div>
             )

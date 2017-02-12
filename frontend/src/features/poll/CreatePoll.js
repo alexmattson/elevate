@@ -12,8 +12,10 @@ class CreatePoll extends React.Component {
   render() {
     return (
       <div>
-        <h1>CreatePoll</h1>
+        <h2>CreatePoll</h2>
       </div>
     )
   }
 }
+
+export default CreatePoll;
