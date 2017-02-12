@@ -1,3 +1,5 @@
+import d3 from 'd3';
+
 export const d3Chart = {};
 
 const svgWidth = 500;
@@ -93,7 +95,8 @@ d3Chart.create = function(htmlElement, props){
 };
 
 d3Chart.update = function(htmlElement, data, title){
-  // if()
+  // debugger;
+  if ( !data || !htmlElement ){return;}
   if(this.svg){ this.svg.remove(); } //remove old
   let newProps = {data: data, title: title}
   this.create(htmlElement, newProps);

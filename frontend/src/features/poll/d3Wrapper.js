@@ -8,7 +8,6 @@ class Chart extends React.Component {
 
   constructor(props){
     super(props);
-    debugger;
     this.title = 'New Customers';
     this.data = this.props.data;
     this.idx = 0;
@@ -16,17 +15,21 @@ class Chart extends React.Component {
 
   componentDidMount(){
     this.chartContainer = document.querySelector('#chart-container');
-    d3Chart.update(this.chartContainer, this.props.data, this.title);
   }
 
   componentWillUnmount(){
     d3Chart.remove();
   }
 
-  render(){
+  componentWillReceiveProps(newProps){
+    console.log(newProps);
+    debugger;
+    if ( !newProps.yes ) { return; }
+    debugger;
+    d3Chart.update(this.chartContainer, newProps, this.title);
+  }
 
-    // debugger;
-    if (!this.data){ return <div/>; }
+  render(){
     return (
       <div id='chart-container' className='chart-container'></div>
     )
