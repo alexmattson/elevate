@@ -2,7 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import { addVote, addResults } from './redux/actions';
 import PollList from './PollList';
+import PollResult from './PollResult';
 // import { getPubnub } from '../../common/pubnub/pubnub';
 
 // import { sub } from '../../common/pubnub/pubnub';
@@ -17,16 +19,16 @@ const pubnub = new PubNub({
   subscribeKey : SUBDCRIBE_KEY
 });
 
-pubnub.addListener({
-  message: function(data){
-    console.log("New Message!!", data);
-  }
-});
+// pubnub.addListener({
+//   message: function(data){
+//     console.log("New Message!!", this.props.addVote(data.vote);
+//   }
+// });
 
 export class DefaultPage extends Component {
   static propTypes = {
     polls: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
+    // actions: PropTypes.object.isRequired,
   };
 
   state = {
@@ -56,19 +58,40 @@ export class DefaultPage extends Component {
     let channel = this.state.poll;
     // debugger;
 
+
     pubnub.subscribe({
-        channels: [channel]
+        channels: [`voting-channel`, `${channel}-result`],
+        message: this.props.addVote
     });
+
     console.log('subscribed');
+
+    pubnub.addListener({
+      message: (data) => {
+        console.log(data);
+        const message = data.message;
+        if (data.channel.match(/result/)) {
+          this.props.addResults(message);
+        }
+        // if (data.message.vote) {
+        //   this.props.addVote(data.message.vote);
+        // }
+      }
+    });
   }
 
   publish(e){
     e.preventDefault();
     let poll = this.state.poll;
     let vote = this.state.vote;
+    // debugger;
+
     pubnub.publish({
-      channel: poll,
-      message: { vote: vote }
+      message: {
+        "poll_id": poll,
+        "vote": vote
+      },
+      channel: 'voting-channel'
     });
 
   }
@@ -98,7 +121,8 @@ export class DefaultPage extends Component {
         <button onClick={this.publish}>
           Vote
         </button>
-
+        <br/>
+        <PollResult/>
 
         <PollList polls={pubnub.polls} />
       </div>
@@ -118,9 +142,12 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
+    addVote: (vote) => dispatch(addVote(vote)),
+    addResults: (results) => dispatch(addResults(results))
   };
 }
+
 
 export default connect(
   mapStateToProps,

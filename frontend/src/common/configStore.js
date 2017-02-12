@@ -1,8 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './rootReducer';
+import createLogger from 'redux-logger';
 
-const middlewares = [thunk];
+const logger = createLogger();
+const middlewares = [thunk, logger];
 let devToolsExtension = f => f;
 
 /* istanbul ignore if  */

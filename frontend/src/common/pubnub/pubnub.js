@@ -45,6 +45,7 @@ export function sub() {
         }
     })
     console.log("Subscribing..");
+    debugger;
     pubnub.subscribe({
         channels: [channel, `pollId-1-result`]
     });
