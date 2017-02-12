@@ -5,7 +5,7 @@ import {
   CLEAR_ERRORS
 } from './constants';
 
-export function reducer(state = initialState, action) {
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_ERROR:
       return {
