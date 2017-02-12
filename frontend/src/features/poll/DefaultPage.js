@@ -5,9 +5,9 @@ import * as actions from './redux/actions';
 import { addVote, addResults } from './redux/actions';
 import PollList from './PollList';
 import PollResult from './PollResult';
-import { Chart } from './d3Wrapper';
+import PollVote from './PollVote';
+import Chart from './d3Wrapper';
 // import { getPubnub } from '../../common/pubnub/pubnub';
-
 // import { sub } from '../../common/pubnub/pubnub';
 import PubNub from 'pubnub';
 
@@ -32,56 +32,56 @@ export class DefaultPage extends Component {
     // actions: PropTypes.object.isRequired,
   };
 
-  state = {
-    poll: '',
-    vote: '',
-    email: ''
-  }
+  // state = {
+  //   poll: '',
+  //   vote: '',
+  //   email: ''
+  // }
 
   constructor(props) {
     super(props);
-    this.handleGetPolls = ::this.handleGetPolls;
-    this.handleChange = ::this.handleChange;
-    this.handleChange2 = ::this.handleChange2;
-    this.handleChange3 = ::this.handleChange3;
-    this.handleVote = ::this.handleVote;
-    this.subscribe = ::this.subscribe;
-    this.publish = ::this.publish;
+    // this.handleGetPolls = ::this.handleGetPolls;
+    // this.handleChange = ::this.handleChange;
+    // this.handleChange2 = ::this.handleChange2;
+    // this.handleChange3 = ::this.handleChange3;
+    // this.handleVote = ::this.handleVote;
+    // this.subscribe = ::this.subscribe;
+    // this.publish = ::this.publish;
   }
 
-  handleGetPolls() {
-    this.props.actions.getPolls();
-  }
+  // handleGetPolls() {
+  //   this.props.actions.getPolls();
+  // }
 
   // subscribe() {
   //   this.props.actions.sub();
   // }
 
-  subscribe(e) {
-    e.preventDefault();
-    let poll = this.state.poll;
+  // subscribe(e) {
+  //   e.preventDefault();
+  //   let poll = this.state.poll;
     // debugger;
 
 
-    pubnub.subscribe({
-        channels: [`voting-channel`, `${poll}-result`],
-        message: this.props.addVote
-    });
-
-    console.log('subscribed');
-
-    pubnub.addListener({
-      message: (data) => {
-        console.log(data);
-        const message = data.message;
-        if (data.channel.match(/result/)) {
-          this.props.addResults(message);
-        }
-        // if (data.message.vote) {
-        //   this.props.addVote(data.message.vote);
-        // }
-      }
-    });
+    // pubnub.subscribe({
+    //     channels: [`voting-channel`, `${poll}-result`],
+    //     message: this.props.addVote
+    // });
+    //
+    // console.log('subscribed');
+    //
+    // pubnub.addListener({
+    //   message: (data) => {
+    //     console.log(data);
+    //     const message = data.message;
+    //     if (data.channel.match(/result/)) {
+    //       this.props.addResults(message);
+    //     }
+    //     // if (data.message.vote) {
+    //     //   this.props.addVote(data.message.vote);
+    //     // }
+    //   }
+    // });
 
     // pubnub.publish({
     //   message: {
@@ -90,44 +90,44 @@ export class DefaultPage extends Component {
     //   },
     //   channel: 'voting-channel'
     // });
-  }
+  // }
 
-  publish(e){
-    e.preventDefault();
-    let poll = this.state.poll;
-    let email = this.state.email;
-    let vote = this.state.vote;
-    // debugger;
-
-    pubnub.publish({
-      message: {
-        "poll_id": poll,
-        "email": email,
-        "vote": vote
-      },
-      channel: 'voting-channel'
-    });
-
-  }
-
-
-  handleChange(e) {
-    this.setState({poll: e.target.value});
-  }
-
-  handleChange2(e) {
-    this.setState({email: e.target.value});
-  }
-
-  handleChange3(e) {
-    e.preventDefault();
-    this.setState({vote: e.target.value});
-  }
-
-  handleVote(e) {
-    e.preventDefault();
-    this.setState({vote: e.target.value});
-  }
+  // publish(e){
+  //   e.preventDefault();
+  //   let poll = this.state.poll;
+  //   let email = this.state.email;
+  //   let vote = this.state.vote;
+  //   // debugger;
+  //
+  //   pubnub.publish({
+  //     message: {
+  //       "poll_id": poll,
+  //       "email": email,
+  //       "vote": vote
+  //     },
+  //     channel: 'voting-channel'
+  //   });
+  //
+  // }
+  //
+  //
+  // handleChange(e) {
+  //   this.setState({poll: e.target.value});
+  // }
+  //
+  // handleChange2(e) {
+  //   this.setState({email: e.target.value});
+  // }
+  //
+  // handleChange3(e) {
+  //   e.preventDefault();
+  //   this.setState({vote: e.target.value});
+  // }
+  //
+  // handleVote(e) {
+  //   e.preventDefault();
+  //   this.setState({vote: e.target.value});
+  // }
 
   render() {
     let { pubnub } = this.props;
@@ -136,29 +136,8 @@ export class DefaultPage extends Component {
       <div className="poll-default-page">
         Welcome to the Poll Page!!!!
 
-        <input onChange={this.handleChange} />
-        <button onClick={this.subscribe}>
-          Subscribe
-        </button>
-        <br></br>
-        <label>
-          Email Address:
-          <input onChange={this.handleChange2} />
-        </label>
-        <br />
-        Vote:
-        <button onClick={this.handleVote} value="yes">
-          Yes
-        </button>
-        <button onClick={this.handleVote} value="no">
-          No
-        </button>
+        <PollVote />
 
-        <br />
-        <button onClick={this.publish}>
-          Vote
-        </button>
-        <br/>
         <PollResult />
         <Chart />
 

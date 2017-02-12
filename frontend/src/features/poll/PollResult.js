@@ -22,7 +22,7 @@ class PollResult extends Component {
   }
 
   render() {
-
+    
     return (
       <div>
         <h3>Poll Results</h3>
