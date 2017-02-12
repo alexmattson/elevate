@@ -3,8 +3,25 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import PollList from './PollList';
+// import { getPubnub } from '../../common/pubnub/pubnub';
 
 // import { sub } from '../../common/pubnub/pubnub';
+import PubNub from 'pubnub';
+
+const PUBLISH_KEY = 'pub-c-0644c683-0882-4d28-b6ac-81acf63ba847';
+const SUBDCRIBE_KEY = 'sub-c-6cbc7d16-f09c-11e6-9283-02ee2ddab7fe';
+
+
+const pubnub = new PubNub({
+  publishKey : PUBLISH_KEY,
+  subscribeKey : SUBDCRIBE_KEY
+});
+
+pubnub.addListener({
+  message: function(data){
+    console.log("New Message!!", data);
+  }
+});
 
 export class DefaultPage extends Component {
   static propTypes = {
@@ -13,26 +30,56 @@ export class DefaultPage extends Component {
   };
 
   state = {
-    poll: ''
+    poll: '',
+    vote: ''
   }
 
   constructor(props) {
     super(props);
     this.handleGetPolls = ::this.handleGetPolls;
     this.handleChange = ::this.handleChange;
+    this.handleChange2 = ::this.handleChange2;
     this.subscribe = ::this.subscribe;
+    this.publish = ::this.publish;
   }
 
   handleGetPolls() {
     this.props.actions.getPolls();
   }
 
-  subscribe() {
-    this.props.actions.sub(this.state.poll);
+  // subscribe() {
+  //   this.props.actions.sub();
+  // }
+
+  subscribe(e) {
+    e.preventDefault();
+    let channel = this.state.poll;
+    // debugger;
+
+    pubnub.subscribe({
+        channels: [channel]
+    });
+    console.log('subscribed');
   }
+
+  publish(e){
+    e.preventDefault();
+    let poll = this.state.poll;
+    let vote = this.state.vote;
+    pubnub.publish({
+      channel: poll,
+      message: { vote: vote }
+    });
+
+  }
+
 
   handleChange(e) {
     this.setState({poll: e.target.value});
+  }
+
+  handleChange2(e) {
+    this.setState({vote: e.target.value});
   }
 
   render() {
@@ -45,6 +92,11 @@ export class DefaultPage extends Component {
         <input onChange={this.handleChange} />
         <button onClick={this.subscribe}>
           Subscribe
+        </button>
+        <br></br>
+        <input onChange={this.handleChange2} />
+        <button onClick={this.publish}>
+          Vote
         </button>
 
 
