@@ -4,6 +4,7 @@ import {
   GET_POLLS_SUCCESS,
   GET_POLLS_FAILURE,
   GET_POLLS_DISMISS_ERROR,
+  RECEIVE_POLL,
   ADD_VOTE
 } from './constants';
 import { addError } from '../../../common/errors/actions';
@@ -43,6 +44,25 @@ export function addVote(vote) {
     };
 }
 
+export function getPoll(pollId) {
+  return dispatch => {
+    dispatch({
+      type: GET_POLLS_BEGIN,
+    });
+
+    $.get('localhost:3000/polls', {pollId} )
+      .done((data) => dispatch(receivePoll(data)))
+      .fail((xhr) => console.log(xhr.responseText))
+  };
+}
+
+export function receivePoll(poll) {
+  return {
+    type: RECEIVE_POLL,
+    payload: poll
+  };
+}
+
 export function reducer(state, action) {
   switch (action.type) {
     case GET_POLLS_BEGIN:
@@ -64,6 +84,12 @@ export function reducer(state, action) {
         getPollsPending: false,
       };
 
+    case RECEIVE_POLL:
+      return {
+        ...state,
+        getPollPending: false,
+        currentPoll: action.payload
+      }
     default:
       return state;
   }
