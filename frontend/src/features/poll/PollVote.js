@@ -28,7 +28,8 @@ class PollVote extends React.Component {
   state = {
     poll: '',
     vote: '',
-    email: ''
+    email: '',
+    subscribed: false
   }
 
   constructor(props) {
@@ -52,23 +53,22 @@ class PollVote extends React.Component {
 
   componentWillReceiveProps(nextProps) {
       const poll = nextProps.currentPoll;
-
-      if (poll.token_id) {
+      if (poll.token && !this.props.subscribed) {
         this.subscribe(poll);
-
+        this.setState({subscribed: true});
       }
   }
 
   subscribe(poll) {
-    e.preventDefault();
-    // debugger;
-    const pollId = poll.token_id
+    //   const pollId = this.props.router.params.id;
+    const pollId = poll.token
     if (pollId) {
       pubnub.subscribe({
         channels: [`${pollId}-result`],
         message: this.props.addVote
       });
 
+      console.log(`${pollId}-result`);
       console.log('subscribed');
 
       pubnub.addListener({
@@ -97,7 +97,7 @@ class PollVote extends React.Component {
 
   publish(e){
     e.preventDefault();
-    let poll = this.state.poll;
+    let poll = this.props.currentPoll.token;
     let email = this.state.email;
     let vote = this.state.vote;
     // debugger;
