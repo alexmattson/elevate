@@ -52,6 +52,7 @@ class PollVote extends React.Component {
   // }
 
   componentWillReceiveProps(nextProps) {
+      byebug
       const poll = nextProps.currentPoll;
       if (poll.token && !this.props.subscribed) {
         this.subscribe(poll);
