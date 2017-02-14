@@ -52,8 +52,9 @@ class PollVote extends React.Component {
   // }
 
   componentWillReceiveProps(nextProps) {
+      console.log(this.props);
       const poll = nextProps.currentPoll;
-      if (poll.token && !this.props.subscribed) {
+      if (this.props.router.params.id && !this.state.subscribed) {
         this.subscribe(poll);
         this.setState({subscribed: true});
       }
@@ -61,7 +62,7 @@ class PollVote extends React.Component {
 
   subscribe(poll) {
     //   const pollId = this.props.router.params.id;
-    const pollId = poll.token
+    const pollId = this.props.router.params.id
     if (pollId) {
       pubnub.subscribe({
         channels: [`${pollId}-result`],
