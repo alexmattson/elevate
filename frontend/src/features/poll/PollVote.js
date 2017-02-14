@@ -98,7 +98,7 @@ class PollVote extends React.Component {
 
   publish(e){
     e.preventDefault();
-    let poll = this.props.currentPoll.token;
+    let poll = this.props.router.params.id;
     let email = this.state.email;
     let vote = this.state.vote;
     // debugger;
