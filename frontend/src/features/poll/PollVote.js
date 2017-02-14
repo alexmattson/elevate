@@ -29,7 +29,8 @@ class PollVote extends React.Component {
     poll: '',
     vote: '',
     email: '',
-    subscribed: false
+    subscribed: false,
+    pollName: ''
   }
 
   constructor(props) {
@@ -74,10 +75,11 @@ class PollVote extends React.Component {
 
       pubnub.addListener({
         message: (data) => {
-          console.log(data);
+          console.log('PUBNUB:' + data);
           const message = data.message;
           if (data.channel.match(/result/)) {
             this.props.addResults(message);
+            this.setState({pollName: this.props.currentPoll.name})
           }
           // if (data.message.vote) {
           //   this.props.addVote(data.message.vote);
@@ -107,11 +109,12 @@ class PollVote extends React.Component {
       message: {
         "poll_id": poll,
         "email": email,
-        "vote": vote
+        "vote": vote,
+        "pollName": this.props.pollName
       },
       channel: 'voting-channel'
     });
-
+    this.setState({pollName: this.props.currentPoll.name})
   }
 
 
@@ -142,7 +145,7 @@ class PollVote extends React.Component {
   render() {
     return (
       <div>
-
+          <h1>{this.state.pollName}</h1>
         <br></br>
         <label>
           Email Address:
